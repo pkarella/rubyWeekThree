@@ -13,7 +13,7 @@ get("/") do
   erb(:index)
 end
 
-post("/projects") do
+post("/index") do
   name = params.fetch("name")
   projects = Project.new({:name => name,:id => nil})
   projects.save()
@@ -22,19 +22,22 @@ post("/projects") do
 end
 
 get("/projects/:id") do
- @projects = Project.find(params.fetch("id").to_i())
+  project = Project.find(params.fetch("id").to_i)
+ @projects = Project.find(params[:id].to_i())
  @volunteers = Volunteer.all()
- erb(:program_result)
+ project.volunteer()
+ erb(:project_result)
 end
 
-post("/projects/new") do
-  description = params.fetch("name")
-  list_id = params.fetch("project_id").to_i()
-  volunteer = Volunteer.new({:name => description, :project_id => project_id})
+post("/projects") do
+  project = Project.find(params.fetch('id').to_i())
+  @project = project
+  name = params.fetch("name")
+  project_id = params.fetch("project_id").to_i()
+  volunteer = Volunteer.new({:name=> name,:id=>nil, :project_id=> project_id})
   volunteer.save()
-  @voluteers = Volunteer.all()
-  @projects = Project.find(project_id)
-  erb(:program_result)
+  @volunteers = Volunteer.all()
+  erb(:project_result)
 end
 
 

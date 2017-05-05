@@ -1,4 +1,26 @@
 
+<div>
+
+
+<h1>Sign up now to volunteer for projects!</h1>
+<form action="/projects" method="post">
+  <label for="project_id">Select a List</label>
+<select id='project_id' name='project_id' type='text'>
+  <% @projects.each() do |project| %>
+    <option value="<%= project.id()%>"> <%= project.name() %> </option>
+  <% end %>
+</select>
+change
+  <label for="name">Volunteer name:</label>
+  <input id="name" name="name" type="text">
+
+  <button type="submit">Add volunteer</button>
+</form>
+
+</div>
+
+
+
 <h1><%=@projects.name%></h1>
 
 <% if @volunteers.any?() %>

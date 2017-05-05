@@ -1,8 +1,9 @@
 class Volunteer
-    attr_reader(:name,:project_id)
-    
+    attr_reader(:name, :id, :project_id)
+
   def initialize (attributes)
     @name = attributes[:name]
+    @id = attributes[:id]
     @project_id = attributes[:project_id]
   end
 
@@ -27,5 +28,13 @@ class Volunteer
     volunteers
   end
 
-
+  def self.find (id)
+    found_volunteer = nil
+    Volunteer.all().each() do |volunteer|
+      if volunteer.id().==(id)
+       found_volunteer = volunteer
+      end
+    end
+    found_volunteer
   end
+end

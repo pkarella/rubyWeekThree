@@ -6,15 +6,6 @@ def initialize (attributes)
   @id = attributes[:id]
 end
 
-def == (another_project)
-  self.name().==(project.name()).&(self.id().==(another_project.id()))
-end
-
-def save
-  result= DB.exec("INSERT INTO projects(name)VALUES('#{@name}')RETURNING id;")
-  @id = result.first().fetch("id").to_i()
-end
-
 def self.all
   returned_projects = DB.exec("SELECT * FROM projects;")
   projects = []
@@ -26,6 +17,15 @@ def self.all
   projects
 end
 
+def save
+  result= DB.exec("INSERT INTO projects(name)VALUES ('#{@name}') RETURNING id;")
+  @id = result.first().fetch("id").to_i()
+end
+
+def == (another_project)
+  self.name().==(project.name()).&(self.id().==(another_project.id()))
+end
+
 def find (test)
   found_project = nil
   Project.all().each() do |projects|
@@ -35,8 +35,9 @@ def find (test)
   end
   found_project
 end
+
 def update (attributes)
-  @name = attributes[:name]
+  @name = attributes.fetch(:name)
   @id = self.id()
   DB.exec("UPDATE projects SET name = '#{@name}' WHERE id = #{@id};")
 end
@@ -47,13 +48,14 @@ def volunteer
   volunteers.each() do |volunteer|
     name = volunteer.fetch("name")
     project_id = volunteer.fetch("project_id").to_i()
-    project_volunteer.push(Volunteer.new({:name => name, :project_id => project_id}))
+    id = volunteer.fetch("id").to_i()
+    project_volunteer.push(Volunteer.new({:name => name, :project_id => project_id, :id => id}))
   end
   project_volunteer
 end
 
 def delete
   DB.exec("DELETE FROM projects WHERE id = #{self.id()};")
-  DB.exec("DELETE FROM volunteers WHERE list_id = #{self.id()};")
+  DB.exec("DELETE FROM volunteers WHERE project_id = #{self.id()};")
 end
 end

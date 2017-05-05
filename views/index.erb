@@ -1,26 +1,6 @@
 
-<h3>Add New Project</h3>
-<form  action="/projects" method="post">
-  <div class="form-group">
-    <label class='form-label' for="name">Create a project:</label>
-    <input type="text" name="name" id='name' placeholder="Project Name" autofocus>
-    <button type="submit" class="button btn">Add project</button>
-  </div>
-</form>
-<h1>Sign up now to volunteer for projects!</h1>
-<form action="/tasks" method="post">
-  <label for="project_id">Select a List</label>
-<select id='project_id' name='project_id' type='text'>
-  <% @projects.each() do |project| %>
-    <option value="<%= project.id()%>"> <%= project.name() %> </option>
-  <% end %>
-</select>
-change
-  <label for="name">Volunteer name:</label>
-  <input id="name" name="name" type="text">
 
-  <button type="submit">Add volunteer</button>
-</form>
+
 
 
 
@@ -40,3 +20,14 @@ change
     <p>There are no projects yet!</p>
 
 <% end %>
+
+<div>
+<h3>Add New Project</h3>
+<form  action="/projects" method="post">
+  <div class="form-group">
+    <label class='form-label' for="name">Create a project:</label>
+    <input type="text" name="name" id='name' placeholder="Project Name" autofocus>
+    <button type="submit" class="button btn">Add project</button>
+  </div>
+</form>
+</div>
