@@ -1,5 +1,6 @@
 class Project
   attr_reader(:name,:id)
+
 def initialize (attributes)
   @name = attributes[:name]
   @id = attributes[:id]
@@ -15,15 +16,44 @@ def save
 end
 
 def self.all
-  returned_projects = DB.exec("SELECT * FROM projects")
+  returned_projects = DB.exec("SELECT * FROM projects;")
   projects = []
   returned_projects.each() do |proj|
     name = proj.fetch("name")
-    id = proj.fetch("id").to_id()
+    id = proj.fetch("id").to_i()
     projects.push(Project.new({:name => name, :id => id}))
   end
   projects
 end
 
+def find (test)
+  found_project = nil
+  Project.all().each() do |projects|
+    if projects.id().==(test)
+      found_project == projects
+    end
+  end
+  found_project
+end
+def update (attributes)
+  @name = attributes[:name]
+  @id = self.id()
+  DB.exec("UPDATE projects SET name = '#{@name}' WHERE id = #{@id};")
+end
 
+def volunteer
+  project_volunteer = []
+  volunteers = DB.exec("SELECT * FROM volunteers WHERE project_id = #{self.id()};")
+  volunteers.each() do |volunteer|
+    name = volunteer.fetch("name")
+    project_id = volunteer.fetch("project_id").to_i()
+    project_volunteer.push(Volunteer.new({:name => name, :project_id => project_id}))
+  end
+  project_volunteer
+end
+
+def delete
+  DB.exec("DELETE FROM projects WHERE id = #{self.id()};")
+  DB.exec("DELETE FROM volunteers WHERE list_id = #{self.id()};")
+end
 end

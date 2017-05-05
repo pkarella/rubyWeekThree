@@ -1,0 +1,24 @@
+
+<h1><%=@projects.name%></h1>
+
+<% if @volunteers.any?() %>
+  <h3>Here are your volunteers:</h3>
+
+  <ul>
+    <% @volunteers.each() do |volunteer| %>
+    <% if volunteer.project_id == @projects.id %>
+      <li><%= volunteer.name() %></a> </li>
+      <% end %>
+    <% end %>
+  </ul>
+
+<% else %>
+
+    <p>There are no volunteers!</p>
+
+<% end %>
+
+
+
+<p><a href="/projects/<%= @projects.id() %>/edit">Edit <%= @projects.name() %> projects</a></p>
+<p><a href="/">Return to Main Page</a></p>

@@ -1,9 +1,11 @@
-class volunteer
-    attr_reader(:name,:id)
+class Volunteer
+    attr_reader(:name,:project_id)
+    
   def initialize (attributes)
     @name = attributes[:name]
-    @id = attributes[:id]
+    @project_id = attributes[:project_id]
   end
+
 
   def == (another_volunteer)
     self.name().==(another_volunteer.name()).&(self.id().==(another_volunteer.id()))
