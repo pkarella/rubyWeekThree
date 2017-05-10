@@ -23,7 +23,7 @@ def save
 end
 
 def == (another_project)
-  self.name().==(project.name()).&(self.id().==(another_project.id()))
+  self.name().==(another_project.name()).&(self.id().==(another_project.id()))
 end
 
 def find (test)

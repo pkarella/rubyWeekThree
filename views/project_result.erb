@@ -6,6 +6,7 @@
 <form action="/projects" method="post">
   <label for="project_id">Select a List</label>
 <select id='project_id' name='project_id' type='text'>
+  
   <% @projects.each() do |project| %>
     <option value="<%= project.id()%>"> <%= project.name() %> </option>
   <% end %>
