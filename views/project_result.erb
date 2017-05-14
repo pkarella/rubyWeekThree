@@ -1,47 +1,37 @@
 
-<div>
+<h1><%=@project.name()%></h1>
 
+<% if @project.volunteers().any?() %>
+  <h3>Here are all the volunteers in this project:</h3>
 
-<h1>Sign up now to volunteer for projects!</h1>
-<form action="/projects" method="post">
-  <label for="project_id">Select a List</label>
-<select id='project_id' name='project_id' type='text'>
-  
-  <% @projects.each() do |project| %>
-    <option value="<%= project.id()%>"> <%= project.name() %> </option>
-  <% end %>
-</select>
-change
-  <label for="name">Volunteer name:</label>
+  <ul>
+    <% @project.volunteers().each() do |volunteer| %>
+      <li><%= volunteer.name() %> </li>
+    <% end %>
+  </ul>
+
+  <% else %>
+    <p>There are no volunteers on this project!</p>
+<% end %>
+
+<h3>Add a volunteer to <%= @project.name() %> </h3>
+
+<form action="/volunteers" method="post">
+  <input id="project_id" name="project_id" type="hidden" value="<%= @project.id() %>">
+
+  <label for="name">Description of the volunteer:</label>
   <input id="name" name="name" type="text">
 
   <button type="submit">Add volunteer</button>
 </form>
 
+<hr>
+
+<div class="container">
+  <a href="/">Home</a>
+  <a href="/projects">View All Projects</a>
+  <a href="/projects/new">Add New Project</a>
 </div>
 
-
-
-<h1><%=@projects.name%></h1>
-
-<% if @volunteers.any?() %>
-  <h3>Here are your volunteers:</h3>
-
-  <ul>
-    <% @volunteers.each() do |volunteer| %>
-    <% if volunteer.project_id == @projects.id %>
-      <li><%= volunteer.name() %></a> </li>
-      <% end %>
-    <% end %>
-  </ul>
-
-<% else %>
-
-    <p>There are no volunteers!</p>
-
-<% end %>
-
-
-
-<p><a href="/projects/<%= @projects.id() %>/edit">Edit <%= @projects.name() %> projects</a></p>
+<p><a href="/projects/<%= @project.id() %>/edit">Edit <%= @project.name() %> project</a></p>
 <p><a href="/">Return to Main Page</a></p>
