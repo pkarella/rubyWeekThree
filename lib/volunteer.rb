@@ -1,10 +1,10 @@
 class Volunteer
-  attr_reader(:name, :id, :project_id)
+  attr_reader(:name,:project_id,:id)
 
   define_method(:initialize) do |attributes|
     @name = attributes.fetch(:name)
-    @project_id = attributes.fetch(:project_id)
-    @id = attributes.fetch(:id)
+    @project_id = attributes.fetch(:project_id).to_i()
+    @id = attributes.fetch(:id).to_i()
   end
 
   define_singleton_method(:all) do
@@ -37,4 +37,16 @@ class Volunteer
   define_method(:==) do |another_volunteer|
     self.name().==(another_volunteer.name()).&(self.project_id().==(another_volunteer.project_id()))
   end
+
+
+define_method(:update) do |attributes|
+  @name = attributes.fetch(:name)
+  @id = self.id().to_i()
+  DB.exec("UPDATE volunteers SET name = '#{@name}' WHERE id = #{@id};")
+end
+
+define_method(:delete) do
+  DB.exec("DELETE FROM volunteers WHERE project_id = #{self.id()};")
+  DB.exec("DELETE FROM volunteers WHERE id = #{self.id()}")
+end
 end

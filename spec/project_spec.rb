@@ -2,9 +2,9 @@ require('spec_helper')
 
 describe(Project) do
   describe("#==") do
-    it("is the same project if it is the same description")do
-    projectone = Project.new({:name => "peter"})
-    projecttwo = Project.new({:name => "peter"})
+    it("is the same project if it is the same name")do
+    projectone = Project.new({:name => "peter",:id=> nil})
+    projecttwo = Project.new({:name => "peter",:id=> nil})
     expect(projectone).to(eq(projecttwo))
   end
 end
